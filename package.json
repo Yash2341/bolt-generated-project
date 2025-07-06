@@ -1,5 +1,5 @@
 {
-  "name": "telegram-mini-app",
+  "name": "telegram-tap-to-earn",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,18 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@netlify/functions": "^2.6.0",
-    "@tanstack/react-query": "^5.32.0",
-    "@tonconnect/ui-react": "^2.0.2",
+    "@libsql/client": "^0.6.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^5.2.1",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.2.0"
   }

@@ -1,107 +1,175 @@
-.app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 16px;
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+  --background-color: #121212;
+  --primary-text-color: #ffffff;
+  --secondary-text-color: #b3b3b3;
+  --accent-color: #f0b90b;
+  --surface-color: #1e1e1e;
+  --success-color: #2ebd85;
 }
 
-.loading-screen {
+body {
+  margin: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  overscroll-behavior-y: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
-  font-size: 1.2rem;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .header {
-  margin-bottom: 24px;
-}
-
-.balance-card {
-  background-color: var(--primary-color);
+  width: 100%;
+  padding: 10px;
+  background-color: var(--surface-color);
   border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.balance-info p {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #aaa;
+.user-info {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-.balance-info h2 {
-  margin: 4px 0 0;
-  font-size: 1.8rem;
+.balance-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.gem-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
+.balance {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
 }
 
-.wallet-connector button {
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.ton-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.wallet-address {
-  font-size: 0.7rem;
-  color: #ccc;
-  text-align: center;
-  margin-top: 4px;
+.coin-icon-small {
+  width: 30px;
+  height: 30px;
 }
 
 .main-content {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
 }
 
-.footer {
-  margin-top: 24px;
+.tap-button {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.referral-card {
-  background-color: var(--primary-color);
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
+.tap-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.referral-card h3 {
-  margin: 0 0 8px;
+.coin-image {
+  width: 150px;
+  height: 150px;
 }
 
-.referral-card p {
-  margin: 4px 0;
-  color: #ccc;
-}
-
-.referral-card span {
+.tap-info {
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--accent-color);
-  font-weight: bold;
 }
 
-.referral-count {
+.floating-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 2rem;
   font-weight: bold;
-  margin-top: 12px !important;
+  color: var(--primary-text-color);
+  pointer-events: none;
+  animation: float-up 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -100px);
+    opacity: 0;
+  }
+}
+
+.referral-section {
+  width: 100%;
+  padding: 15px;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.referral-info {
+  font-size: 1rem;
+  color: var(--secondary-text-color);
+}
+
+.referral-info strong {
+  color: var(--success-color);
+}
+
+.copy-button {
+  padding: 10px 20px;
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: #d4a00a;
+}
+
+.loading {
+  font-size: 1.5rem;
 }
