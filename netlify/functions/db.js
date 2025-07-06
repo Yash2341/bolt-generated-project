@@ -5,11 +5,20 @@ const DB_FILE = '/tmp/miniapp.db';
 
 let db = null;
 
-const ALL_TASKS = [
-  { id: 'daily_1', name: 'Daily Reward', reward: 100, type: 'daily' },
-  { id: 'social_1', name: 'Join Telegram', reward: 500, type: 'social', url: 'https://t.me/Airdrop', icon: '/telegram.svg' },
-  { id: 'social_2', name: 'Follow on X', reward: 500, type: 'social', url: 'https://t.me/Airdrop', icon: '/x.svg' },
-  { id: 'social_3', name: 'Subscribe YouTube', reward: 500, type: 'social', url: 'https://t.me/Airdrop', icon: '/youtube.svg' },
+const SOCIAL_TASKS = [
+  { id: 'social_1', name: 'Join TonBasket Telegram', reward: 100, url: 'https://t.me/Airdrop' },
+  { id: 'social_2', name: 'Join TradingGainX Telegram', reward: 100, url: 'https://t.me/Airdrop' },
+  { id: 'social_3', name: 'Join TradingGain WhatsApp Channel', reward: 100, url: 'https://t.me/Airdrop' },
+  { id: 'social_4', name: 'Join DevCrypto Calls Channel', reward: 50, url: 'https://t.me/Airdrop' },
+  { id: 'social_5', name: 'Join Crypto WhatsApp Channel', reward: 100, url: 'https://t.me/Airdrop' },
+];
+
+const MILESTONES = [
+    { id: 'milestone_1', name: 'Refer 5 Friends', required: 5, reward: 300 },
+    { id: 'milestone_2', name: 'Refer 25 Friends', required: 25, reward: 1500 },
+    { id: 'milestone_3', name: 'Refer 50 Friends', required: 50, reward: 3000 },
+    { id: 'milestone_4', name: 'Refer 100 Friends', required: 100, reward: 6000 },
+    { id: 'milestone_5', name: 'Refer 200 Friends', required: 200, reward: 12000 },
 ];
 
 export async function getDb() {
@@ -27,9 +36,10 @@ export async function getDb() {
       username TEXT,
       balance INTEGER DEFAULT 0,
       wallet_address TEXT,
-      last_daily_claim INTEGER
+      last_daily_checkin INTEGER,
+      last_update_check INTEGER
     );
-    CREATE TABLE IF NOT EXISTS user_tasks (
+    CREATE TABLE IF NOT EXISTS user_social_tasks (
       user_id INTEGER,
       task_id TEXT,
       completed_at INTEGER,
@@ -39,7 +49,7 @@ export async function getDb() {
     CREATE TABLE IF NOT EXISTS referrals (
       referrer_id INTEGER,
       referee_id INTEGER PRIMARY KEY,
-      reward_claimed INTEGER DEFAULT 0,
+      created_at INTEGER,
       FOREIGN KEY (referrer_id) REFERENCES users(telegram_id),
       FOREIGN KEY (referee_id) REFERENCES users(telegram_id)
     );
@@ -48,4 +58,4 @@ export async function getDb() {
   return db;
 }
 
-export { ALL_TASKS };
+export { SOCIAL_TASKS, MILESTONES };

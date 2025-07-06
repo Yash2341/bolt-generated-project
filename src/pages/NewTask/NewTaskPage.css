@@ -1,0 +1,75 @@
+.new-task-page {
+  padding-bottom: 20px;
+}
+.new-task-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.new-task-header .icon {
+  font-size: 2.5rem;
+}
+.new-task-header h2 {
+  margin: 8px 0 0;
+  font-size: 1.5rem;
+}
+.new-task-form {
+  background-color: var(--primary-surface);
+  border-radius: 12px;
+  padding: 20px;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.form-group input {
+  width: 100%;
+  background-color: var(--secondary-surface);
+  border: 1px solid var(--secondary-surface);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+.completions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+}
+.completions-grid button {
+  background-color: var(--secondary-surface);
+  border: 1px solid var(--secondary-surface);
+  color: var(--text-primary);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.completions-grid button.active {
+  background-color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  font-weight: bold;
+}
+.estimated-cost {
+  text-align: center;
+  margin: 24px 0;
+  font-size: 1rem;
+}
+.estimated-cost span {
+  font-weight: bold;
+  color: var(--ton-blue);
+}
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: var(--accent-blue);
+  color: white;
+  font-size: 1rem;
+}

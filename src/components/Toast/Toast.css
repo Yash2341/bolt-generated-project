@@ -1,0 +1,25 @@
+.toast-container {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%, -20px);
+  background-color: var(--primary-surface);
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+  border: 1px solid var(--secondary-surface);
+  font-weight: 500;
+}
+
+.toast-container.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
