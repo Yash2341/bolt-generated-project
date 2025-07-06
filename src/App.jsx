@@ -26,7 +26,7 @@ function App() {
     try {
       if (!tg.initDataUnsafe?.user) {
         // Mock user data for local development if needed
-        if (window.location.hostname === 'localhost') {
+        if (window.location.hostname === 'localhost' || window.location.port === '5173') {
           console.log("Running in dev mode, using mock user.");
           const mockUser = { id: 12345, first_name: 'Dev', username: 'devuser' };
           const mockReferrerId = null;
@@ -38,7 +38,10 @@ function App() {
             referrerId: mockReferrerId || ''
           });
           const response = await fetch(`/api/getUserData?${queryParams.toString()}`);
-          if (!response.ok) throw new Error('Failed to fetch mock user data.');
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({ message: 'Failed to fetch mock user data.' }));
+            throw new Error(errorData.message);
+          }
           const data = await response.json();
           setBalance(data.balance);
           setReferralCount(data.referral_count);
@@ -64,7 +67,8 @@ function App() {
 
       const response = await fetch(`/api/getUserData?${queryParams.toString()}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch user data from server.');
+        const errorData = await response.json().catch(() => ({ message: 'Failed to fetch user data from server.' }));
+        throw new Error(errorData.message);
       }
       const data = await response.json();
       setBalance(data.balance);

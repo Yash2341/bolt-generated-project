@@ -1,11 +1,21 @@
 import { createClient } from '@libsql/client';
+import { existsSync, mkdirSync } from 'fs';
+import { dirname } from 'path';
 
-// Create a new client instance
+// Define the path for the SQLite file in the temporary directory
+const dbPath = '/tmp/data.sqlite';
+const dbDir = dirname(dbPath);
+
+// Ensure the directory exists because Netlify's temp environment can be empty
+if (!existsSync(dbDir)) {
+  mkdirSync(dbDir, { recursive: true });
+}
+
+// Create a new client instance pointing to the local file.
+// WARNING: This file will be deleted when the function execution ends.
+// ALL DATA WILL BE LOST.
 const client = createClient({
-  // IMPORTANT: Replace with your Turso DB URL and Auth Token
-  // You should store these in Netlify environment variables
-  url: process.env.DB_URL,
-  authToken: process.env.DB_AUTH_TOKEN,
+  url: `file:${dbPath}`,
 });
 
 // Function to ensure the 'users' table exists
