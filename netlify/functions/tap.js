@@ -1,4 +1,4 @@
-import db from './db/index.js';
+import { getStore } from '@netlify/blobs';
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -12,24 +12,20 @@ export const handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ message: 'User ID is required' }) };
     }
 
-    // Increment balance by 10
-    await db.execute({
-      sql: 'UPDATE users SET balance = balance + 10 WHERE id = ?',
-      args: [userId],
-    });
+    const usersStore = getStore('users');
+    const userData = await usersStore.get(userId, { type: 'json' });
 
-    // Fetch the new balance
-    const result = await db.execute({
-      sql: 'SELECT balance FROM users WHERE id = ?',
-      args: [userId],
-    });
+    if (!userData) {
+      return { statusCode: 404, body: JSON.stringify({ message: 'User not found. Please reload the app.' }) };
+    }
 
-    const newBalance = result.rows.length > 0 ? result.rows[0].balance : 0;
+    userData.balance += 10;
+    await usersStore.setJSON(userId, userData);
 
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ newBalance }),
+      body: JSON.stringify({ newBalance: userData.balance }),
     };
   } catch (error) {
     console.error('Error in tap function:', error);

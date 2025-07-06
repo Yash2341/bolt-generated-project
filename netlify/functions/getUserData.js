@@ -1,4 +1,4 @@
-import db, { initializeDatabase } from './db/index.js';
+import { getStore } from '@netlify/blobs';
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'GET') {
@@ -6,53 +6,40 @@ export const handler = async (event) => {
   }
 
   try {
-    await initializeDatabase();
-
     const { userId, firstName, username, referrerId } = event.queryStringParameters;
 
     if (!userId) {
       return { statusCode: 400, body: JSON.stringify({ message: 'User ID is required' }) };
     }
 
-    let userData;
-    const tx = await db.transaction('write');
-    try {
-      // Check if user exists
-      const existingUser = await tx.execute({
-        sql: 'SELECT * FROM users WHERE id = ?',
-        args: [userId],
-      });
+    const usersStore = getStore('users');
+    let userData = await usersStore.get(userId, { type: 'json' });
 
-      if (existingUser.rows.length > 0) {
-        userData = existingUser.rows[0];
-      } else {
-        // New user, create an entry
-        const referredBy = referrerId && referrerId !== userId ? referrerId : null;
-        
-        await tx.execute({
-          sql: 'INSERT INTO users (id, first_name, username, referred_by) VALUES (?, ?, ?, ?)',
-          args: [userId, firstName, username, referredBy],
-        });
+    // If user does not exist, create them
+    if (!userData) {
+      const referredBy = referrerId && referrerId !== userId ? referrerId : null;
+      
+      userData = {
+        id: userId,
+        firstName,
+        username,
+        balance: 0,
+        referral_count: 0,
+        referred_by: referredBy,
+      };
+      
+      await usersStore.setJSON(userId, userData);
 
-        // If referred, reward the referrer
-        if (referredBy) {
-          await tx.execute({
-            sql: 'UPDATE users SET balance = balance + 500, referral_count = referral_count + 1 WHERE id = ?',
-            args: [referredBy],
-          });
+      // If they were referred, reward the referrer
+      if (referredBy) {
+        const referrerData = await usersStore.get(referredBy, { type: 'json' });
+        // Ensure the referrer exists before trying to update
+        if (referrerData) {
+          referrerData.balance += 500;
+          referrerData.referral_count += 1;
+          await usersStore.setJSON(referredBy, referrerData);
         }
-        
-        // Fetch the newly created user data
-        const newUser = await tx.execute({
-            sql: 'SELECT * FROM users WHERE id = ?',
-            args: [userId],
-        });
-        userData = newUser.rows[0];
       }
-      await tx.commit();
-    } catch (err) {
-      await tx.rollback();
-      throw err;
     }
 
     return {
