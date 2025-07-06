@@ -1,0 +1,107 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.balance-card {
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.balance-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.balance-info h2 {
+  margin: 4px 0 0;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.gem-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+.wallet-connector button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ton-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.wallet-address {
+  font-size: 0.7rem;
+  color: #ccc;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.footer {
+  margin-top: 24px;
+}
+
+.referral-card {
+  background-color: var(--primary-color);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.referral-card h3 {
+  margin: 0 0 8px;
+}
+
+.referral-card p {
+  margin: 4px 0;
+  color: #ccc;
+}
+
+.referral-card span {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.referral-count {
+  font-weight: bold;
+  margin-top: 12px !important;
+}
